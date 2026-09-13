@@ -1,0 +1,31 @@
+test_accessible_resize_clamps (__main__.PortraitTests.test_accessible_resize_clamps) ... ok
+test_all_menu_text_matches_log_size (__main__.PortraitTests.test_all_menu_text_matches_log_size) ... ok
+test_completed_entries_unchanged (__main__.PortraitTests.test_completed_entries_unchanged) ... ok
+test_distinct_backgrounds (__main__.PortraitTests.test_distinct_backgrounds) ... ok
+test_equal_typography_both_languages (__main__.PortraitTests.test_equal_typography_both_languages) ... ok
+test_escape_cancels_recording_without_appending (__main__.PortraitTests.test_escape_cancels_recording_without_appending) ... ok
+test_exactly_two_cards (__main__.PortraitTests.test_exactly_two_cards) ... ok
+test_gap_drag_changes_split_only (__main__.PortraitTests.test_gap_drag_changes_split_only) ... ok
+test_hold_release_does_not_open_menu (__main__.PortraitTests.test_hold_release_does_not_open_menu) ... ok
+test_jump_to_latest_and_equal_space (__main__.PortraitTests.test_jump_to_latest_and_equal_space) ... ok
+test_language_selection_only_before_start (__main__.PortraitTests.test_language_selection_only_before_start) ... ok
+test_legacy_variant_preserved_same_typography (__main__.PortraitTests.test_legacy_variant_preserved_same_typography) ... ok
+test_long_log_retained (__main__.PortraitTests.test_long_log_retained) ... ok
+test_modal_focus_trapped_and_escape_restores (__main__.PortraitTests.test_modal_focus_trapped_and_escape_restores) ... ok
+test_mouse_scroll_does_not_open_menu_or_record (__main__.PortraitTests.test_mouse_scroll_does_not_open_menu_or_record) ... ok
+test_narrow_phone_no_type_scaling_or_horizontal_overflow (__main__.PortraitTests.test_narrow_phone_no_type_scaling_or_horizontal_overflow) ... ok
+test_native_touch_scrolls_both_orientations_without_actions (__main__.PortraitTests.test_native_touch_scrolls_both_orientations_without_actions) ... ok
+test_no_line_or_handle_in_cards (__main__.PortraitTests.test_no_line_or_handle_in_cards) ... ok
+test_no_persistent_controls_language_names_cursors (__main__.PortraitTests.test_no_persistent_controls_language_names_cursors) ... ok
+test_pending_revision_in_place_and_uniform (__main__.PortraitTests.test_pending_revision_in_place_and_uniform) ... ok
+test_resize_never_changes_type (__main__.PortraitTests.test_resize_never_changes_type) ... ok
+test_separate_scroll_positions_and_follow (__main__.PortraitTests.test_separate_scroll_positions_and_follow) ... ok
+test_stop_review_and_start_have_exits (__main__.PortraitTests.test_stop_review_and_start_have_exits) ... ok
+test_tap_opens_menu_and_back_dismisses (__main__.PortraitTests.test_tap_opens_menu_and_back_dismisses) ... ok
+test_top_controls_rotated_and_localized (__main__.PortraitTests.test_top_controls_rotated_and_localized) ... ok
+test_top_rotated (__main__.PortraitTests.test_top_rotated) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 13.855s
+
+OK

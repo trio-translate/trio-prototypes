@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="432" height="844" viewBox="0 0 432 844" role="img" aria-label="divider-live: fixed-size face-to-face portrait prototype">
+<title>Two persistent language logs; identical 22 px typography</title>
+<rect x=".5" y=".5" width="431" height="843" rx="38" fill="#080e12" stroke="#34424b"/>
+<defs><clipPath id="screen"><rect x="9" y="9" width="414" height="826" rx="30"/></clipPath></defs>
+<g clip-path="url(#screen)">
+<rect x="9" y="9" width="414" height="413" rx="0" fill="#122b25"/>
+<defs><clipPath id="top"><rect width="414" height="413" rx="0"/></clipPath></defs>
+<g transform="translate(9 9)"><g clip-path="url(#top)">
+<g transform="translate(414 413) rotate(180)" fill="#f0f4f5" font-family="Arial, sans-serif" font-size="22" font-weight="400">
+<text x="24" y="45">Parece uma ótima ideia.</text>
+<text x="24" y="96.9">Podemos tomar um café e depois</text>
+<text x="24" y="128.8">dar uma volta pelo rio.</text>
+<text x="24" y="180.7">Vamos nos encontrar lá às três?</text>
+</g></g></g>
+<rect x="9" y="422" width="414" height="413" rx="0" fill="#132735"/>
+<defs><clipPath id="bottom"><rect width="414" height="413" rx="0"/></clipPath></defs>
+<g transform="translate(9 422)"><g clip-path="url(#bottom)">
+<g fill="#f0f4f5" font-family="Arial, sans-serif" font-size="22" font-weight="400">
+<text x="24" y="45">That sounds like a great idea.</text>
+<text x="24" y="96.9">We could grab a coffee and then go</text>
+<text x="24" y="128.8">for a walk by the river.</text>
+<text x="24" y="180.7">Shall we meet there at three?</text>
+</g></g></g>
+<path d="M9 422H423" stroke="#81989d"/>
+<rect x="196" y="419" width="40" height="6" rx="3" fill="#81989d"/>
+</g></svg>

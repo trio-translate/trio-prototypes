@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080e12">
+<title>Trio · face-to-face portrait</title>
+<style>
+:root { color-scheme: dark; --type-size: 22px; --type-weight: 400; --ink: #f0f4f5; --gap: 12px; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; min-height: 100%; }
+body { background: transparent; display: grid; place-items: center; min-height: 100vh; min-height: 100dvh; }
+/* One typography token: no fit-to-box, state-specific size, weight, opacity or cursor. */
+body, button, select, input, h1, h2, p, label, a {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: var(--type-size); font-weight: var(--type-weight); line-height: 1.45;
+  color: var(--ink); letter-spacing: 0;
+}
+button, select { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid #a0d5ca; outline-offset: -3px; }
+.device { width: min(432px, 100vw); height: min(844px, calc(100vh - 24px)); height: min(844px, calc(100dvh - 24px));
+  position: relative; padding: 8px; border: 1px solid #34424b; border-radius: 38px;
+  background: #080e12; overflow: hidden; }
+.screen { position: relative; height: 100%; overflow: hidden; border-radius: 30px; background: #080e12; }
+.stack { position: absolute; inset: 0; display: grid; grid-template-rows: 1fr var(--gap) 1fr; }
+.card { position: relative; min-height: 0; overflow: hidden; border: 0; border-radius: 26px; }
+.card[data-side="top"] { background: #122b25; }
+.card[data-side="bottom"] { background: #132735; }
+.reader { height: 100%; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch; touch-action: pan-y; overflow-anchor: none;
+  user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.reader::-webkit-scrollbar { display: none; }
+.card[data-side="top"] .reader { transform: rotate(180deg); }
+.log { padding: 24px; min-height: 100%; }
+.log p { margin: 0 0 20px; overflow-wrap: anywhere; }
+.log p:last-child { margin-bottom: 0; }
+.gap { grid-row: 2; }
+.split-target { position: absolute; left: 0; width: 100%; height: 44px; z-index: 3;
+  cursor: row-resize; touch-action: none; user-select: none; background: transparent; }
+.split-target:focus-visible { border-radius: 6px; }
+/* The cards variant has neither a line nor a resting handle. The gap itself is the boundary. */
+.screen[data-layout="divider"] { --gap: 0px; }
+.screen[data-layout="divider"] .card { border-radius: 0; }
+.screen[data-layout="divider"] .split-target::before { content: ""; position: absolute; top: 21px; left: 0; right: 0;
+  height: 1px; background: #81989d; }
+.screen[data-layout="divider"] .split-target::after { content: ""; position: absolute; width: 40px; height: 6px;
+  top: 19px; left: calc(50% - 20px); background: #81989d; border-radius: 8px; }
+.card.recording { box-shadow: inset 0 0 0 3px #a0d5ca; }
+.recording-status { position: absolute; bottom: 12px; left: 12px; right: 12px;
+  padding: 8px 12px; background: #182f35; border-radius: 14px; text-align: center; pointer-events: none; }
+.card[data-side="top"] .recording-status { bottom: auto; top: 12px; transform: rotate(180deg); }
+.overlay { position: absolute; inset: 0; z-index: 10; display: grid; place-items: center; }
+.sheet { width: calc(100% - 40px); max-height: calc(100% - 40px); overflow: auto; padding: 8px;
+  border-radius: 22px; border: 1px solid #667d87; background: #1a2c35; box-shadow: 0 12px 36px #0007; }
+.sheet[data-side="top"] { transform: rotate(180deg); }
+.sheet button { display: flex; align-items: center; gap: 16px; width: 100%; min-height: 60px;
+  padding: 14px 16px; background: transparent; border: 0; text-align: left; border-radius: 12px; }
+.sheet button:hover, .sheet button:focus-visible { background: #29404a; }
+.sheet button + button { border-top: 1px solid #3b535d; }
+.stop-icon { width: 17px; height: 17px; background: #ff8a8a; border-radius: 4px; flex: none; }
+.back-icon { width: 15px; height: 15px; border: solid var(--ink); border-width: 0 0 2px 2px; transform: rotate(45deg); margin: 0 2px; flex: none; }
+.setup { position: absolute; inset: 0; z-index: 5; overflow-y: auto; background: #102027; padding: 24px; }
+.setup h1, .setup p { margin: 0 0 22px; }
+.setup label { display: block; margin: 22px 0 10px; }
+.setup select, .setup button, .setup a { display: block; width: 100%; min-height: 52px; border: 1px solid #586e78;
+  border-radius: 14px; background: #1b333c; padding: 10px 14px; text-align: left; text-decoration: none; }
+.setup button { margin: 18px 0; }
+.setup .primary { background: #274b4d; }
+.setup option { background: #142831; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; clip: rect(0,0,0,0); overflow: hidden; white-space: nowrap; }
+@media (max-width: 480px) {
+  .device { width: 100vw; height: 100vh; height: 100dvh; border: 0; border-radius: 0;
+    padding: max(6px, env(safe-area-inset-top)) max(6px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left)); }
+  .screen { border-radius: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="device" aria-label="Trio face-to-face portrait prototype">
+  <div class="screen" id="screen" data-layout="cards">
+    <div class="stack" id="stack" hidden>
+      <section class="card" data-side="top" id="card-top" aria-label="Upper participant">
+        <div class="reader" id="reader-top" tabindex="0" role="region" aria-label="Upper conversation log" aria-describedby="gesture-help"><div class="log" id="log-top"></div></div>
+        <div class="recording-status" id="record-top" hidden>Recording demo</div>
+      </section>
+      <div class="gap" aria-hidden="true"></div>
+      <section class="card" data-side="bottom" id="card-bottom" aria-label="Lower participant">
+        <div class="reader" id="reader-bottom" tabindex="0" role="region" aria-label="Lower conversation log" aria-describedby="gesture-help"><div class="log" id="log-bottom"></div></div>
+        <div class="recording-status" id="record-bottom" hidden>Recording demo</div>
+      </section>
+      <div id="split" class="split-target" role="separator" tabindex="0" aria-label="Resize conversation cards" aria-orientation="horizontal"
+           aria-valuemin="20" aria-valuemax="80" aria-valuenow="50" aria-controls="card-top card-bottom"></div>
+    </div>
+    <section class="setup" id="setup" aria-label="Before the session">
+      <h1>Face to face · portrait</h1>
+      <p id="setup-state">A clickable interaction demo. No microphone, speech recognition or translation service is connected.</p>
+      <label for="lower-language">Your language · lower card</label>
+      <select id="lower-language"><option value="en">English</option><option value="pt">Português (Brasil)</option></select>
+      <label for="upper-language">Their language · upper card</label>
+      <select id="upper-language"><option value="pt">Português (Brasil)</option><option value="en">English</option></select>
+      <label for="layout">Compare layouts</label>
+      <select id="layout"><option value="cards">Two cards · no dividing line</option><option value="divider">Original split · dividing line</option></select>
+      <button class="primary" id="start">Start demo</button>
+      <button id="review" hidden>Read previous log</button>
+      <p>Drag the gap to share the space. Swipe either card to read its history. Tap for controls. Hold anywhere on your card to try recording.</p>
+      <p>Keyboard: Tab to a card, Enter for controls, hold Space to record. Arrow keys resize the focused gap. Escape cancels or goes back.</p>
+    </section>
+    <div class="overlay" id="overlay" hidden>
+      <div class="sheet" id="sheet" data-side="bottom" role="dialog" aria-modal="true" aria-label="Session controls">
+        <button id="stop"><span class="stop-icon" aria-hidden="true"></span><span id="stop-label">Stop session</span></button>
+        <button id="back"><span class="back-icon" aria-hidden="true"></span><span id="back-label">Go back</span></button>
+        <button id="latest" hidden>Jump to latest</button>
+        <button id="balance">Equal space</button>
+      </div>
+    </div>
+    <div id="gesture-help" class="sr-only">Swipe to read history. Tap or press Enter for session controls. Hold or hold Space for recording. Recording is simulated.</div>
+    <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+  </div>
+</main>
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const sides = ['top', 'bottom'];
+  const readers = Object.fromEntries(sides.map(s => [s, $('reader-' + s)]));
+  const logs = Object.fromEntries(sides.map(s => [s, $('log-' + s)]));
+  const nodes = { top: new Map(), bottom: new Map() };
+  const follow = { top: true, bottom: true };
+  const params = new URLSearchParams(location.search);
+  const samples = [
+    { en: 'That sounds like a great idea.', pt: 'Parece uma ótima ideia.' },
+    { en: 'We could grab a coffee and then go for a walk by the river.', pt: 'Podemos tomar um café e depois dar uma volta pelo rio.' },
+    { en: 'Shall we meet there at three?', pt: 'Vamos nos encontrar lá às três?' },
+    { en: 'Yes, there is a quiet café near the bridge.', pt: 'Sim, tem um café tranquilo perto da ponte.' },
+    { en: 'I would like a table outside, in the shade.', pt: 'Eu gostaria de uma mesa lá fora, na sombra.' },
+    { en: 'We can stay as long as we like. There is no hurry.', pt: 'Podemos ficar o tempo que quisermos. Não temos pressa.' },
+    { en: 'Afterwards, let’s take the path through the park.', pt: 'Depois, vamos pelo caminho que passa pelo parque.' },
+    { en: 'Perfect. I will bring some water for the walk.', pt: 'Perfeito. Vou levar água para a caminhada.' }
+  ];
+  const manual = { en: 'Let’s take the quiet path along the river.', pt: 'Vamos pelo caminho tranquilo ao longo do rio.' };
+  let entries = [], serial = 0, split = 0.5, running = false, automatic = true, recording = null;
+  let languages = { top: 'pt', bottom: 'en' }, draft = null, sampleIndex = 2;
+  let timer = null, revision = 0, menuSide = 'bottom', dialogReturn = null, pointer = null, dividerPointer = null;
+  let endSync = false;
+  function announce(message) { $('announcement').textContent = message; }
+  function distance(side) { const r = readers[side]; return Math.max(0, r.scrollHeight - r.clientHeight - r.scrollTop); }
+  function syncFollowing() {
+    endSync = true;
+    sides.forEach(side => { if (follow[side]) readers[side].scrollTop = readers[side].scrollHeight; });
+    requestAnimationFrame(() => { endSync = false; });
+  }
+  function paint() {
+    for (const side of sides) {
+      for (const entry of entries) {
+        let node = nodes[side].get(entry.id);
+        if (!node) { node = document.createElement('p'); node.dataset.id = String(entry.id); nodes[side].set(entry.id, node); logs[side].append(node); }
+        const text = entry[languages[side]];
+        if (node.textContent !== text) node.textContent = text;
+        node.dataset.settled = String(entry.settled);
+      }
+      readers[side].lang = languages[side] === 'pt' ? 'pt-BR' : 'en';
+    }
+    syncFollowing();
+  }
+  function layout() {
+    if ($('stack').hidden) return;
+    const gap = parseFloat(getComputedStyle($('screen')).getPropertyValue('--gap')) || 0;
+    const available = Math.max(0, $('stack').clientHeight - gap);
+    const top = available * split;
+    $('stack').style.gridTemplateRows = `${top}px ${gap}px minmax(0, 1fr)`;
+    $('split').style.top = `${top + gap / 2 - 22}px`;
+    $('split').setAttribute('aria-valuenow', String(Math.round(split * 100)));
+    $('split').setAttribute('aria-valuetext', `${Math.round(split * 100)} percent upper card, ${100 - Math.round(split * 100)} percent lower card`);
+    syncFollowing();
+  }
+  function setSplit(value) { split = Math.min(.8, Math.max(.2, Number(value) || .5)); layout(); }
+  new ResizeObserver(layout).observe($('screen'));
+  function clearTimer() { clearTimeout(timer); timer = null; }
+  function schedule(fn, delay) { clearTimer(); timer = setTimeout(fn, delay); }
+  function appendPair(pair, settled = true) {
+    const entry = { id: ++serial, en: pair.en, pt: pair.pt, settled };
+    entries.push(entry); paint(); return entry;
+  }
+  function settleDraft() {
+    if (!draft) return;
+    Object.assign(draft.entry, draft.full, { settled: true });
+    draft = null; revision = 0; paint();
+  }
+  function beginDraft(pair) {
+    if (draft) settleDraft();
+    const entry = appendPair({ en: '', pt: '' }, false);
+    draft = { entry, full: pair }; revision = 0;
+  }
+  function tick() {
+    if (!running || !automatic || recording) return;
+    if (!draft) beginDraft(samples[sampleIndex++ % samples.length]);
+    revision++;
+    for (const lang of ['en', 'pt']) {
+      const words = draft.full[lang].split(' ');
+      // Streaming revises the ONE pending paragraph. It never appends each partial as a new turn.
+      draft.entry[lang] = words.slice(0, revision).join(' ');
+    }
+    paint();
+    const total = Math.max(...['en','pt'].map(lang => draft.full[lang].split(' ').length));
+    if (revision >= total) { settleDraft(); schedule(tick, 1800); }
+    else schedule(tick, 260);
+  }
+  function restartTimer() { if (running && automatic && !recording) schedule(tick, 1400); }
+  function start({ auto = true, count = 2 } = {}) {
+    closeMenu(false); cancelGesture(); clearTimer();
+    running = true; automatic = auto; recording = null; draft = null; revision = 0;
+    entries = []; serial = 0; sampleIndex = 2;
+    sides.forEach(s => { logs[s].replaceChildren(); nodes[s].clear(); follow[s] = true; });
+    languages = { top: $('upper-language').value, bottom: $('lower-language').value };
+    $('screen').dataset.layout = $('layout').value;
+    $('setup').hidden = true; $('stack').hidden = false; $('review').hidden = false;
+    for (let i = 0; i < count; i++) appendPair(samples[i % samples.length]);
+    layout(); restartTimer(); announce('Demo session started.');
+  }
+  function showSetup() {
+    clearTimer(); running = false; cancelGesture(); closeMenu(false);
+    $('stack').hidden = true; $('setup').hidden = false;
+    $('setup-state').textContent = entries.length ? 'Session stopped. The previous log is still available. Starting a new demo begins a new log.' : 'A clickable interaction demo. No microphone, speech recognition or translation service is connected.';
+    $('review').hidden = !entries.length;
+    $('start').focus({ preventScroll: true });
+  }
+  function stopSession() { clearTimer(); running = false; cancelGesture(); showSetup(); announce('Session stopped.'); }
+  function closeMenu(restore = true) {
+    $('overlay').hidden = true; $('stack').inert = false;
+    if (restore && dialogReturn) dialogReturn.focus({ preventScroll: true });
+  }
+  function openMenu(side) {
+    if ($('stack').hidden || recording) return;
+    menuSide = side; dialogReturn = readers[side];
+    const pt = languages[side] === 'pt';
+    $('sheet').dataset.side = side;
+    $('stop-label').textContent = running ? (pt ? 'Parar sessão' : 'Stop session') : (pt ? 'Voltar à configuração' : 'Back to setup');
+    $('back-label').textContent = pt ? 'Voltar' : 'Go back';
+    $('latest').textContent = pt ? 'Ir para o mais recente' : 'Jump to latest';
+    $('balance').textContent = pt ? 'Espaço igual' : 'Equal space';
+    $('latest').hidden = follow[side];
+    $('sheet').lang = pt ? 'pt-BR' : 'en';
+    $('overlay').hidden = false; $('stack').inert = true;
+    $('stop').focus({ preventScroll: true });
+  }
+  $('stop').onclick = stopSession;
+  $('back').onclick = () => closeMenu();
+  $('latest').onclick = () => { follow[menuSide] = true; syncFollowing(); closeMenu(); };
+  $('balance').onclick = () => { setSplit(.5); closeMenu(); };
+  $('overlay').addEventListener('pointerdown', e => { if (e.target === $('overlay')) closeMenu(); });
+  $('start').onclick = () => start();
+  $('review').onclick = () => { $('setup').hidden = true; $('stack').hidden = false; layout(); };
+  $('lower-language').onchange = () => { $('upper-language').value = $('lower-language').value === 'en' ? 'pt' : 'en'; };
+  $('upper-language').onchange = () => { $('lower-language').value = $('upper-language').value === 'en' ? 'pt' : 'en'; };
+  function beginRecord(side) {
+    if (!running || recording || !$('overlay').hidden) return;
+    clearTimer(); recording = side;
+    $('card-' + side).classList.add('recording');
+    $('record-' + side).textContent = languages[side] === 'pt' ? 'Gravação de demonstração' : 'Recording demo';
+    $('record-' + side).hidden = false;
+    announce('Recording demo. Release to finish.');
+  }
+  function finishRecord(cancel = false) {
+    if (!recording) return;
+    const side = recording; recording = null;
+    $('card-' + side).classList.remove('recording'); $('record-' + side).hidden = true;
+    if (!cancel) {
+      settleDraft(); beginDraft(manual);
+      // Complete the simulated recording as one new turn, even with automatic playback paused.
+      let step = 0;
+      const deliver = () => {
+        if (!running || recording || !draft) return;
+        step++;
+        for (const lang of ['en','pt']) draft.entry[lang] = manual[lang].split(' ').slice(0, step).join(' ');
+        paint();
+        if (step >= Math.max(manual.en.split(' ').length, manual.pt.split(' ').length)) { settleDraft(); restartTimer(); }
+        else schedule(deliver, 180);
+      };
+      schedule(deliver, 120);
+    } else restartTimer();
+    announce(cancel ? 'Recording cancelled.' : 'Recording demo finished.');
+  }
+  function cancelGesture() {
+    if (pointer) { clearTimeout(pointer.hold); pointer = null; }
+    dividerPointer = null; finishRecord(true);
+  }
+  for (const side of sides) {
+    const reader = readers[side];
+    reader.addEventListener('scroll', () => { if (!endSync && !recording) follow[side] = distance(side) < 10; }, { passive: true });
+    reader.addEventListener('contextmenu', e => e.preventDefault());
+    reader.addEventListener('pointerdown', e => {
+      if (!e.isPrimary || e.button !== 0 || pointer || dividerPointer || !$('overlay').hidden) return;
+      const state = { id: e.pointerId, side, x: e.clientX, y: e.clientY, scroll: reader.scrollTop, moved: false, recorded: false, hold: null, kind: e.pointerType };
+      pointer = state;
+      reader.setPointerCapture(e.pointerId);
+      if (running) state.hold = setTimeout(() => { if (pointer === state && !state.moved) { state.recorded = true; beginRecord(side); } }, 450);
+    });
+    reader.addEventListener('pointermove', e => {
+      if (!pointer || pointer.id !== e.pointerId || pointer.side !== side) return;
+      const dy = e.clientY - pointer.y;
+      if (Math.hypot(e.clientX - pointer.x, dy) > 9 && !pointer.recorded) { pointer.moved = true; clearTimeout(pointer.hold); }
+      if (pointer.moved && pointer.kind === 'mouse') {
+        follow[side] = false;
+        reader.scrollTop = pointer.scroll + (side === 'top' ? dy : -dy);
+      }
+    });
+    reader.addEventListener('pointerup', e => {
+      if (!pointer || pointer.id !== e.pointerId || pointer.side !== side) return;
+      const state = pointer; clearTimeout(state.hold); pointer = null;
+      if (state.recorded) finishRecord();
+      else if (!state.moved) openMenu(side);
+    });
+    reader.addEventListener('pointercancel', cancelGesture);
+    reader.addEventListener('lostpointercapture', e => { if (pointer?.id === e.pointerId) cancelGesture(); });
+    reader.addEventListener('wheel', e => {
+      // Rotation changes physical direction. Keep a trackpad's motion consistent with the screen.
+      if (side !== 'top') return;
+      e.preventDefault(); follow[side] = false;
+      const unit = e.deltaMode === 1 ? 32 : e.deltaMode === 2 ? reader.clientHeight : 1;
+      reader.scrollTop -= e.deltaY * unit;
+      follow[side] = distance(side) < 10;
+    }, { passive: false });
+    reader.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); openMenu(side); }
+      if (e.code === 'Space') { e.preventDefault(); if (!e.repeat) beginRecord(side); }
+      if (e.key === 'End') { e.preventDefault(); follow[side] = true; syncFollowing(); }
+    });
+    reader.addEventListener('keyup', e => { if (e.code === 'Space') { e.preventDefault(); finishRecord(); } });
+  }
+  $('split').addEventListener('pointerdown', e => {
+    if (!e.isPrimary || e.button !== 0 || pointer || dividerPointer) return;
+    dividerPointer = e.pointerId; $('split').setPointerCapture(e.pointerId); e.preventDefault();
+  });
+  $('split').addEventListener('pointermove', e => {
+    if (dividerPointer !== e.pointerId) return;
+    const rect = $('stack').getBoundingClientRect();
+    const gap = parseFloat(getComputedStyle($('screen')).getPropertyValue('--gap')) || 0;
+    setSplit((e.clientY - rect.top - gap / 2) / (rect.height - gap));
+  });
+  for (const event of ['pointerup','pointercancel','lostpointercapture']) $('split').addEventListener(event, () => { dividerPointer = null; });
+  $('split').addEventListener('keydown', e => {
+    const values = { ArrowUp: split - .05, ArrowDown: split + .05, Home: .2, End: .8 };
+    if (e.key in values) { e.preventDefault(); setSplit(values[e.key]); }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { e.preventDefault(); cancelGesture(); closeMenu(); }
+    if (e.key === 'Tab' && !$('overlay').hidden) {
+      const buttons = [...$('sheet').querySelectorAll('button')].filter(b => !b.hidden);
+      const first = buttons[0], last = buttons.at(-1);
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  window.addEventListener('blur', cancelGesture);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelGesture(); clearTimer(); } else restartTimer(); });
+  // Explicit test/preview hooks; never claim this demo captures or translates real speech.
+  window.portraitPrototype = {
+    start, setSplit, openMenu, stop: stopSession,
+    pause() { automatic = false; clearTimer(); },
+    play() { automatic = true; restartTimer(); },
+    append(count = 1) { for (let i = 0; i < Math.min(5000, Math.max(0, count)); i++) appendPair(samples[i % samples.length]); },
+    stream(pair = samples[2]) { clearTimer(); beginDraft(pair); if (automatic) tick(); },
+    revise(pair) { if (!draft) throw new Error('There is no pending paragraph.'); Object.assign(draft.entry, pair); paint(); },
+    settle: settleDraft,
+    latest(side) { follow[side] = true; syncFollowing(); },
+    recording: beginRecord,
+    cancelRecording() { finishRecord(true); },
+    snapshot() { return { count: entries.length, entries: entries.map(e => ({ ...e })), split, running, recording, follow: { ...follow }, languages: { ...languages }, layout: $('screen').dataset.layout, menu: !$('overlay').hidden }; }
+  };
+  if (params.get('layout') === 'divider') $('layout').value = 'divider';
+  const preview = params.get('preview');
+  if (preview || params.has('demo')) {
+    start({ auto: !preview, count: 3 });
+    if (preview === 'resized') setSplit(.67);
+    if (preview === 'controls') openMenu('bottom');
+    if (preview === 'top-controls') openMenu('top');
+    if (preview === 'recording') beginRecord('bottom');
+  }
+})();
+</script>
+</body>
+</html>

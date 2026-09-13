@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="464" height="800" viewBox="0 0 464 800" role="img" aria-label="Face-to-face portrait: controls">
+<title>Face-to-face portrait — uniform 22px text</title>
+<defs><clipPath id="screen"><rect x="16" y="16" width="432" height="768" rx="34"/></clipPath>
+<clipPath id="top"><rect width="432" height="384"/></clipPath>
+<clipPath id="bottom"><rect width="432" height="384"/></clipPath></defs>
+<rect x="9" y="9" width="446" height="782" rx="41" fill="#11181c"/>
+<g clip-path="url(#screen)">
+<rect x="16" y="16" width="432" height="384" fill="#102923"/>
+<rect x="16" y="400" width="432" height="384" fill="#102332"/>
+<g transform="translate(16 16) translate(432 384) rotate(180)" clip-path="url(#top)">
+<text x="28" y="50" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="400" fill="#edf3f5">Parece uma ótima ideia.</text>
+<text x="28" y="99" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="400" fill="#edf3f5">Podemos tomar um café e depois dar</text>
+<text x="28" y="132" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="400" fill="#edf3f5">uma volta pelo rio.</text>
+<text x="28" y="181" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="400" fill="#edf3f5">Vamos nos encontrar lá às três?</text>
+</g>
+<g transform="translate(16 400)" clip-path="url(#bottom)">
+<text x="28" y="50" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="400" fill="#edf3f5">That sounds like a great idea.</text>
+<text x="28" y="99" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="400" fill="#edf3f5">We could grab a coffee and then go</text>
+<text x="28" y="132" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="400" fill="#edf3f5">for a walk by the river.</text>
+<text x="28" y="181" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="400" fill="#edf3f5">Shall we meet there at three?</text>
+</g>
+<path d="M16 400H448" stroke="#98aeb4" stroke-width="1"/>
+<rect x="213" y="398" width="38" height="4" rx="2" fill="#98aeb4"/>
+<rect x="16" y="16" width="432" height="768" fill="#000" opacity=".48"/>
+<g transform=""><rect x="57" y="267" width="350" height="266" rx="20" fill="#172c37" stroke="#758b97"/>
+<text x="80" y="312" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="400" fill="#edf3f5">Session</text>
+<rect x="80" y="342" width="304" height="58" rx="12" fill="#1b303c" stroke="#748591"/>
+<text x="232" y="379" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="400" fill="#edf3f5">Continue</text>
+<rect x="80" y="426" width="304" height="58" rx="12" fill="#1b303c" stroke="#748591"/>
+<text x="232" y="463" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="400" fill="#edf3f5">Stop and go back</text>
+</g>
+</g>
+<rect x="16" y="16" width="432" height="768" rx="34" fill="none" stroke="#50616b"/>
+</svg>

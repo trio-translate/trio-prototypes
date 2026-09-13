@@ -1,0 +1,91 @@
+name: Import verified portrait kit
+on:
+  push:
+    branches: [prototype/portrait-studio-kit]
+    paths: [.github/workflows/portrait-import.yml, .github/portrait-transfer.json]
+permissions:
+  contents: write
+concurrency:
+  group: portrait-kit-import
+  cancel-in-progress: false
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: prototype/portrait-studio-kit
+      - name: Verify and unpack authorized source files
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib,io,json,pathlib,struct,urllib.request,zipfile,zlib
+          root=pathlib.Path.cwd()
+          config=root/'.github/portrait-transfer.json'
+          if not config.exists():
+              print('Import runner is ready. No transfer requested yet.')
+              raise SystemExit(0)
+          meta=json.loads(config.read_text())
+          url=meta['url']
+          from urllib.parse import urlparse
+          parsed=urlparse(url)
+          if parsed.scheme!='https' or not parsed.hostname.endswith('.blob.core.windows.net'):
+              raise SystemExit('Unapproved transfer host')
+          # The private, short-lived source URL is never printed. No provider keys are involved.
+          try:
+              with urllib.request.urlopen(url,timeout=90) as response:
+                  capsule=response.read(50*1024*1024+1)
+          except Exception:
+              raise SystemExit('Transfer unavailable or expired. Renew the private source URL; do not change sharing permissions.')
+          if len(capsule)>50*1024*1024 or hashlib.sha256(capsule).hexdigest()!=meta['capsule_sha256']:
+              raise SystemExit('Transfer integrity check failed')
+          if capsule[:8]!=b'\x89PNG\r\n\x1a\n':raise SystemExit('Not a PNG transfer capsule')
+          # A private ancillary PNG chunk carries the exact ZIP, unchanged by the visual preview.
+          offset=8;payload=None
+          while offset+12<=len(capsule):
+              size=struct.unpack('>I',capsule[offset:offset+4])[0]
+              kind=capsule[offset+4:offset+8];end=offset+8+size
+              data=capsule[offset+8:end]
+              if end+4>len(capsule):raise SystemExit('Truncated PNG')
+              if zlib.crc32(kind+data)&0xffffffff!=struct.unpack('>I',capsule[end:end+4])[0]:raise SystemExit('PNG CRC failed')
+              if kind==b'trIo':
+                  if payload is not None:raise SystemExit('Duplicate payload')
+                  payload=data
+              offset=end+4
+              if kind==b'IEND':break
+          if payload is None or hashlib.sha256(payload).hexdigest()!=meta['zip_sha256']:
+              raise SystemExit('ZIP integrity check failed')
+          prefixes=('face2face/portrait/studio/','face2face/portrait/archive/originals/','face2face/portrait/mockups/','face2face/portrait/cards/mockups/')
+          exact={'face2face/portrait/STUDIO.md','.github/workflows/portrait-studio.yml'}
+          with zipfile.ZipFile(io.BytesIO(payload)) as archive:
+              manifest=json.loads(archive.read('manifest.json'));seen=set();verified=[]
+              if sum(i.file_size for i in archive.infolist())>100*1024*1024:raise SystemExit('Bundle too large')
+              for entry in manifest['files']:
+                  path=entry['path'];part=pathlib.PurePosixPath(path)
+                  if path in seen or part.is_absolute() or '..' in part.parts or '\\' in path:
+                      raise SystemExit('Unsafe or duplicate path')
+                  if path not in exact and not path.startswith(prefixes):raise SystemExit('Path outside authorized prototype scope')
+                  if path.startswith(prefixes[1:]) and not path.endswith('.png'):raise SystemExit('Original folders accept missing PNG assets only')
+                  data=archive.read(path)
+                  if hashlib.sha256(data).hexdigest()!=entry['sha256']:raise SystemExit('File hash mismatch: '+path)
+                  destination=root/path
+                  if destination.exists() and destination.read_bytes()!=data:raise SystemExit('Refusing to overwrite a concurrent file: '+path)
+                  seen.add(path);verified.append((destination,data))
+              if set(archive.namelist())!=seen|{'manifest.json'}:raise SystemExit('Unexpected archive entries')
+              for destination,data in verified:
+                  destination.parent.mkdir(parents=True,exist_ok=True);destination.write_bytes(data)
+              print('Verified and restored',len(verified),'files, including original image bytes.')
+          config.unlink()
+          (root/'.github/workflows/portrait-import.yml').unlink()
+          PY
+      - name: Commit verified source and images to this branch
+        shell: bash
+        run: |
+          if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add face2face/portrait .github
+          git diff --cached --check
+          git commit -m 'Import verified portrait studio, Swift kit, fixtures and original image assets'
+          git push origin HEAD:prototype/portrait-studio-kit

@@ -1,0 +1,21 @@
+name: Portrait kit validation
+on:
+  pull_request:
+    paths:
+      - 'face2face/portrait/kit/**'
+      - '.github/workflows/portrait-kit.yml'
+permissions:
+  contents: read
+jobs:
+  runner-availability:
+    name: Runner availability (not an application test)
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - run: echo 'Linux runner available; application sources are being staged in this draft.'
+  apple-availability:
+    name: Apple toolchain availability (not an application test)
+    runs-on: macos-latest
+    timeout-minutes: 3
+    steps:
+      - run: xcodebuild -version && swift --version

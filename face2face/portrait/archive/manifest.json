@@ -1,0 +1,199 @@
+{
+  "source_count": 24,
+  "unique_png_count": 22,
+  "binary_delivery": "complete ZIP; not yet bulk-uploaded to GitHub",
+  "sources": [
+    {
+      "source_file_id": "file_00000000501881f4a429895521375f13",
+      "description": "original-portrait",
+      "archive_path": "originals/01-original-portrait.png",
+      "sha256": "2936f9316e3ed9018a12fdde03f9f342ac3a2363ce054bcfad456910f32724df",
+      "size_bytes": 238897,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_00000000557c81f4aba5c3fa51eecc71",
+      "description": "early-landscape-bubbles",
+      "archive_path": "originals/02-early-landscape-bubbles.png",
+      "sha256": "47a5cd13f042885afb15ca9c285e1d2f2780054d0449e53f547e0ef24cb342e4",
+      "size_bytes": 1078216,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_0000000028b8820aba79dd1328f4b47a",
+      "description": "early-landscape-badges",
+      "archive_path": "originals/03-early-landscape-badges.png",
+      "sha256": "52aefa3a3e998071092614f791e72f9549478689cafee328749c80a89ca96144",
+      "size_bytes": 1521795,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_00000000a8e48243a34b873c69cff934",
+      "description": "rejected-people-landscape",
+      "archive_path": "originals/04-rejected-people-landscape.png",
+      "sha256": "773aa57bbb953ea1addbb1e0dffc5f3d4fa8e125e200175687151187086a9803",
+      "size_bytes": 1876309,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_00000000c1988246b393e9161d80679d",
+      "description": "early-landscape-participants",
+      "archive_path": "originals/05-early-landscape-participants.png",
+      "sha256": "29dd40a78d16a817496c8900094ee4e0aa57de853afa610ebd62da4776d39c7d",
+      "size_bytes": 981630,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_0000000065f881f58675c59b4db63a56",
+      "description": "portrait-language-labels",
+      "archive_path": "originals/06-portrait-language-labels.png",
+      "sha256": "4239ef72d4b183096a1c05758a34ffde1e0fa738d74fcfa4c742633e73a2232c",
+      "size_bytes": 216498,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_000000001f188243b27966413ee741fb",
+      "description": "persistent-record-buttons",
+      "archive_path": "originals/07-persistent-record-buttons.png",
+      "sha256": "a73567e4026b6fa23471bb79fcd8f7e8899ba9f6746bf8e06c82867abd1d1c8b",
+      "size_bytes": 1207201,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_00000000b5dc8210b580298d930fb780",
+      "description": "early-action-panel",
+      "archive_path": "originals/08-early-action-panel.png",
+      "sha256": "e7e2ae6cda4e7e2b55c4ad2c4f315adca270754c383db562ebdb918204fa1336",
+      "size_bytes": 1226067,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_000000001ea481f489dc950355fe9b1a",
+      "description": "recording-button-waveform",
+      "archive_path": "originals/09-recording-button-waveform.png",
+      "sha256": "36e60425fa1a4927eedc6195987af42ef98fdf5627809042f9fa3ca05b654d7a",
+      "size_bytes": 1294737,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_00000000e9bc81f4abc63e01385435de",
+      "description": "appending-log-live",
+      "archive_path": "originals/10-appending-log-live.png",
+      "sha256": "db520b661e171a9a8c10c4e0b8979d56272e0e01a2bb45ee225a9732ad8f0a2d",
+      "size_bytes": 1478361,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_000000000da481f4a6bbc7d684a65d3c",
+      "description": "appending-log-controls",
+      "archive_path": "originals/11-appending-log-controls.png",
+      "sha256": "c7a110226c08013972ce479aecad812a5261be4b2fa764b0c4d991e2008453ed",
+      "size_bytes": 1538098,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_000000009b148243aef98ddfb0c1481b",
+      "description": "appending-log-waveform",
+      "archive_path": "originals/12-appending-log-waveform.png",
+      "sha256": "b206bd7e9d82484b25bd8a04eb37ba0f452ea961e6059f858f46eafbaedebadd",
+      "size_bytes": 1516257,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_00000000682481f4bf588a0c5a02b63d",
+      "description": "user-log-reference",
+      "archive_path": "originals/13-user-log-reference.png",
+      "sha256": "4e6c4460138badd664140562082a41d205fbd2b7b1aa2effd0b82b1ad2baf77b",
+      "size_bytes": 2035668,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_00000000d51081f48a6593a9eac6872a",
+      "description": "rejected-grey-order",
+      "archive_path": "originals/14-rejected-grey-order.png",
+      "sha256": "03d9e06bde1a198e59a9740df87635705753962a91df0a389cbea01a58bfa669",
+      "size_bytes": 1511178,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_00000000aa78821081cc80b4a8a0392e",
+      "description": "unsettled-grey-experiment",
+      "archive_path": "originals/15-unsettled-grey-experiment.png",
+      "sha256": "a9ebace17b37456ff6acb0d576b9e229a66556dce5b0008bddc8cbdbd443aabb",
+      "size_bytes": 1457372,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_0000000003408210ab3a8a3bd6568ec7",
+      "description": "user-record-buttons-reference",
+      "archive_path": "originals/16-user-record-buttons-reference.png",
+      "sha256": "3f80e5c38039f02c5883e30c765fec417cec27ebcd676cabda0e922d80f12e5d",
+      "size_bytes": 1666072,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_000000006ac08243a6a023b92d874bfe",
+      "description": "input-preview",
+      "archive_path": "originals/17-input-preview.png",
+      "sha256": "1a4227384976a06af66f57654d041f39a826e29d08327934f0f4eb1cd5361c27",
+      "size_bytes": 338255,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_00000000ed0c8246b171bfa0f2621c29",
+      "description": "uniform-text-preview",
+      "archive_path": "originals/18-uniform-text-preview.png",
+      "sha256": "42d620cf28b10b402680ea28d466dc7febd42bb324484a3b7a5fe8f9b07f4331",
+      "size_bytes": 265155,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_000000000c20821099fbbec737eb13b3",
+      "description": "rejected-nonuniform-colors",
+      "archive_path": "originals/19-rejected-nonuniform-colors.png",
+      "sha256": "beca428f135a0e2b4d69b8633beb5e366cf457f18778ad4a3d5b028110fb28bc",
+      "size_bytes": 1443292,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_00000000be5081f4b91eb5e4bd5dfa97",
+      "description": "user-color-reference",
+      "archive_path": "originals/16-user-record-buttons-reference.png",
+      "sha256": "3f80e5c38039f02c5883e30c765fec417cec27ebcd676cabda0e922d80f12e5d",
+      "size_bytes": 1666072,
+      "deduplicated": true
+    },
+    {
+      "source_file_id": "file_0000000025ec81f59517532ae76f4ed1",
+      "description": "green-blue-with-regressions",
+      "archive_path": "originals/21-green-blue-with-regressions.png",
+      "sha256": "38a1d77062d807ce6c73ec75993ce399cc9eac04d29a03f633da913e201f168a",
+      "size_bytes": 1066622,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_00000000c328820cb11050c68fa1f3d3",
+      "description": "selected-area-attempt-one",
+      "archive_path": "originals/22-selected-area-attempt-one.png",
+      "sha256": "db0de507363af9559ad036251d3a0c04a8873339037f3e34f068a44dfd01545c",
+      "size_bytes": 1175314,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_000000006ac48210a9a5397feb9497e5",
+      "description": "selected-area-attempt-two",
+      "archive_path": "originals/23-selected-area-attempt-two.png",
+      "sha256": "2871dde14f65132a73ea4caa37a4737e3825901cc5d78952bd3b7d167e74b04f",
+      "size_bytes": 1249800,
+      "deduplicated": false
+    },
+    {
+      "source_file_id": "file_000000001c8081f48b139d199ca8af9f",
+      "description": "uniform-size-reminder-reference",
+      "archive_path": "originals/16-user-record-buttons-reference.png",
+      "sha256": "3f80e5c38039f02c5883e30c765fec417cec27ebcd676cabda0e922d80f12e5d",
+      "size_bytes": 1666072,
+      "deduplicated": true
+    }
+  ]
+}

@@ -9,4 +9,4 @@ The SVG files are lightweight vector companions to the executable prototype. The
 - [Transient recording simulation](cards-recording.svg)
 - [Divider comparison](divider-live.svg)
 
-Run `python3 face2face/portrait/tests/render_mockups.py` for exact browser PNG screenshots of these six states. The downloadable prototype package includes those PNGs. Outer backgrounds use true transparency, not a checkerboard.
+Run `python3 face2face/portrait/cards/tests/render_mockups.py` for exact browser PNG screenshots of these six states. The downloadable prototype package includes those PNGs. Outer backgrounds use true transparency, not a checkerboard.
